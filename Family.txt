@@ -1,0 +1,80 @@
+@Entity
+public class Home
+{
+	@Id
+	private int hid;
+	private String hname;
+//setters-getters 
+}
+
+
+
+
+@Entity
+public class Family
+{
+	@Id
+	private int fid;
+	private String fname;
+	@MantToMany(cascade=cascadeType.All)
+	private Set<Home> sh=new HashSet<>();
+//setter-getters
+
+	public void setSh( Set<Home> sh)
+	{ this.sh=sh;}
+	public Set<Home> getSh()
+	{return sh;}
+}
+
+
+public class Test
+{
+	public static void main(String args[])
+	{
+		Scanner sc=new Sacnner(System.in);
+		SessionFactiory sf=HibernateUtil.getSessionFactory();	
+		Session sesn=sf.openSession();
+		Transaction ts=sesn.beginTransaction();
+		
+		Home A=new Home();
+		System.out.println("enter home id=");
+		A.setHid(sc.nextInt());
+		System.out.println("enter home name=");
+		A.setHname(sc.next()+sc.nextLine());
+		
+		Home B=new Home();
+		System.out.println("enter home id=");
+		B.setHid(sc.nextInt());
+		System.out.println("enter home name=");
+		B.setHname(sc.next()+sc.nextLine());
+		
+		Family PAPA=new Family();
+		System.out.println("enter family id=");
+		PAPA.setHid(sc.nextInt());
+		System.out.println("enter home name=");
+		PAPA.setHname(sc.next()+sc.nextLine());
+		
+		Family CHACHA=new Family();
+		System.out.println("enter family id=");
+		CHACHA.setHid(sc.nextInt());
+		System.out.println("enter home name=");
+		CHACHA.setHname(sc.next()+sc.nextLine());
+		
+		PAPA.getSh.add(A);
+		PAPA.getSh.add(B);
+		
+		CHACHA.getSh.add(A);
+		CHACHA.getSh.add(B);
+		
+		sesn.save(PAPA);
+		sesn.save(CHACHA);
+		ts.commit();
+
+		
+	
+
+	}
+
+
+
+}
